@@ -5,11 +5,7 @@ const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 
-function isSearched(searchTerm) {
-  return function(item) {
-    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-  }
-}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +16,7 @@ class App extends Component {
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
   }
   setSearchTopStories(result) {
@@ -37,7 +34,12 @@ class App extends Component {
   }
   onSearchChange(event) {
     this.setState({ searchTerm: event.target.value });
-    }
+  }
+  onSearchSubmit(event) {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+    event.preventDefault();
+  }
   componentDidMount() {
     const { searchTerm } = this.state;
     this.fetchSearchTopStories(searchTerm);
@@ -51,11 +53,13 @@ class App extends Component {
           <Search
             value={searchTerm}
             onChange={this.onSearchChange}
-          />
+            onSubmit={this.onSearchSubmit}
+          >
+            Search
+          </Search>
           {result?
             <Table
                 list={result.hits}
-                pattern={searchTerm}
                 onDismiss={this.onDismiss}
             />:null
           }
@@ -85,10 +89,10 @@ class App extends Component {
     }
   class Table extends Component {
     render() {
-      const { list, pattern, onDismiss } = this.props;
+      const { list,onDismiss } = this.props;
         return (
           <div className="table">
-            {list.filter(isSearched(pattern)).map(item =>
+            {list.map(item =>
             <div key={item.objectID} className="table-row">
               <span>
                 <a href={item.url}>{item.title}</a>
@@ -108,13 +112,16 @@ class App extends Component {
       );
     }
   }
-const Search=({ value, onChange })=>
-  <form>
+const Search=({ value, onChange,onSubmit, children })=>
+  <form onSubmit={onSubmit}>
     <input
       type="text"
       value={value}
       onChange={onChange}
     />
+    <button type="submit">
+      {children}
+    </button>
   </form>
 
   
