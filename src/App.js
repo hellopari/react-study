@@ -44,28 +44,48 @@ class App extends Component {
   render() {
     const { searchTerm, list } = this.state;
     return (
-      <div className="App">
-        <Search
-          value={searchTerm}
-          onChange={this.onSearchChange}
-        />
-       <Table
-          list={list}
-          pattern={searchTerm}
-          onDismiss={this.onDismiss}
-       />
+      <div className="App page">
+        <div className="interactions">
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}
+          />
+          <Table
+              list={list}
+              pattern={searchTerm}
+              onDismiss={this.onDismiss}
+          />
+        </div>
       </div>
     );
     }
 
   }
+  class Button extends Component {
+    render() {
+      const {
+        onClick,
+        className,
+        children,
+      } = this.props;
+    return (
+      <button
+        onClick={onClick}
+        className={className}
+        type="button"
+        >
+        {children}
+      </button>
+    );
+  }
+    }
   class Table extends Component {
     render() {
       const { list, pattern, onDismiss } = this.props;
         return (
-          <div>
+          <div className="table">
             {list.filter(isSearched(pattern)).map(item =>
-            <div key={item.objectID}>
+            <div key={item.objectID} className="table-row">
               <span>
                 <a href={item.url}>{item.title}</a>
               </span>
@@ -73,30 +93,25 @@ class App extends Component {
               <span>{item.num_comments}</span>
               <span>{item.points}</span>
               <span>
-                <button
-                  onClick={() => onDismiss(item.objectID)}
-                  type="button"
-                >
-                  Dismiss
-                </button>
+              <Button 
+                onClick={() => onDismiss(item.objectID)} 
+                className="button-inline">
+                Dismiss
+              </Button>
               </span>
             </div>)}
-            </div>
+          </div>
       );
     }
   }
-  class Search extends Component {
-    render() {
-      const { value, onChange } = this.props;
-      return (
-        <form>
-          <input
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-        </form>
-      );
-    }
-  }
+const Search=({ value, onChange })=>
+  <form>
+    <input
+      type="text"
+      value={value}
+      onChange={onChange}
+    />
+  </form>
+
+  
 export default App;
