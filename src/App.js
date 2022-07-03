@@ -126,45 +126,51 @@ class App extends Component {
           /> }
           
            <div className="interactions">
-           { isLoading
-            ? <Loading />
-            : <Button
+           <ButtonWithLoading
+              isLoading={isLoading}
               onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
               More
-            </Button>
-}
+           </ButtonWithLoading>
           </div>
         </div>
       </div>
     );
     }
+ }
+ const Button = ({ onClick, className = '', children }) =>
+ <button
+   onClick={onClick}
+   className={className}
+   type="button"
+   >
+   {children}
+ </button>
 
-  }
-  const Sort = ({ sortKey, onSort, children,activeSortKey }) => {
-    const sortClass = ['button-inline'];
-    if (sortKey === activeSortKey) {
-      sortClass.push('button-active');
-  }
-    return (
-      <Button
-        onClick={() => onSort(sortKey)}
-        className={sortClass.join(' ')}
-      >
-      {children}
-    </Button>
-    ); 
-  }
+const Loading = () => <div>Loading ...</div>
 
-  const Button = ({ onClick, className = '', children }) =>
-      <button
-        onClick={onClick}
-        className={className}
-        type="button"
-        >
-        {children}
-      </button>
+ const withLoading = (Component) => ({ isLoading, ...rest }) =>
+ isLoading
+ ? <Loading />
+ : <Component { ...rest } />
 
-  const Loading = () => <div>Loading ...</div>
+const ButtonWithLoading = withLoading(Button);
+
+const Sort = ({ sortKey, onSort, children,activeSortKey }) => {
+  const sortClass = ['button-inline'];
+  if (sortKey === activeSortKey) {
+    sortClass.push('button-active');
+  }
+  return (
+    <Button
+      onClick={() => onSort(sortKey)}
+      className={sortClass.join(' ')}
+    >
+    {children}
+  </Button>
+  ); 
+}
+
+
 
   class Table extends Component {
     constructor(props) {
