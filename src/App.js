@@ -148,10 +148,14 @@ class App extends Component {
 
 const Loading = () => <div>Loading ...</div>
 
- const withLoading = (Component) => ({ isLoading, ...rest }) =>
- isLoading
- ? <Loading />
- : <Component { ...rest } />
+function withLoading(Component) {
+   return class extends Component{
+    render(){
+      const { isLoading, ...rest } = this.props;
+      return isLoading ? <Loading/> : <Component { ...rest } />
+    }
+   }
+ }
 
 const ButtonWithLoading = withLoading(Button);
 
