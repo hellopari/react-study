@@ -142,10 +142,10 @@ class App extends Component {
    onClick={onClick}
    className={className}
    type="button"
-   >
+ >
    {children}
  </button>
-
+ 
 const Loading = () => <div>Loading ...</div>
 
 function withLoading(Component) {

@@ -1,0 +1,32 @@
+
+.star-rating {
+    height: 15.1px;
+    position: relative;
+  }
+  
+  .star {
+    width: 15.1px;
+    height: 15.1px;
+    display: block;
+    margin-right: 4px;
+    overflow: hidden;
+  }
+
+  .star1{
+    height: 100%;
+    background-image: url(https://gw.alicdn.com/imgextra/i4/O1CN01tzXrgS1mGcBNj0oIJ_!!6000000004927-2-tps-32-32.png);
+    background-size: cover;
+  }
+  
+  .star-rating-top {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .star-rating-bottom {
+  display: flex;
+  }

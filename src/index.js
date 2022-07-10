@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Rating from './Rating'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    <Rating data={{itemRatingScore:3.1, starWidth : 15.1}}></Rating>
   </React.StrictMode>
 );
 
