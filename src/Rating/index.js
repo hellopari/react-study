@@ -13,8 +13,6 @@ const Rating= (props) => {
         if (rating > 1) {
             stars.push(1);
         } else if (rating > 0) {
-            
-         console.log("rating",rating)
             const empty = Math.abs(0 - rating);
             const quart = Math.abs(0.25 - rating);
             const half = Math.abs(0.5 - rating);

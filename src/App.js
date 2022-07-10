@@ -148,15 +148,11 @@ class App extends Component {
  
 const Loading = () => <div>Loading ...</div>
 
-function withLoading(Component) {
-   return class extends Component{
-    render(){
-      const { isLoading, ...rest } = this.props;
-      return isLoading ? <Loading/> : <Component { ...rest } />
-    }
-   }
- }
-
+const withLoading = (Component) => ({ isLoading, ...rest }) =>
+ isLoading
+ ? <Loading />
+ : <Component { ...rest } />
+ 
 const ButtonWithLoading = withLoading(Button);
 
 const Sort = ({ sortKey, onSort, children,activeSortKey }) => {
